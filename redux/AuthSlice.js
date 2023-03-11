@@ -52,7 +52,7 @@ const authSlice = createSlice({
     successMessage: "",
     logoutLoadingState:false,
     info:{},
-    profileImage:""
+    profileImage:"",
 
   },
   reducers: {

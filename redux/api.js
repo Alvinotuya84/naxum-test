@@ -17,4 +17,11 @@ export const login = (formdata) => API.post("/login", formdata);
 export const updateProfile = (formdata) => API.patch(`/update-profile`, formdata);
 
 export const logout = () => API.post("/logout");
+export const searchContact=(formdata)=>API.post("/search/contacts",formdata);
+export const addContact=(formdata)=>API.post("/contacts",formdata);
+export const allContacts=(formdata)=>API.get("/contacts");
+export const deleteContact=(formdata)=>API.delete(`/contacts/${formdata}`);
+
+
+
 

@@ -34,6 +34,23 @@ paddingHorizontal:scale(5)
        }
 
   })
+ export  const contactItemStyles=StyleSheet.create({
+    wrapper:{
+      flexDirection:"row",
+      width:"100%",
+      height:scale(50),
+      margin:scale(20)
+
+
+    }
+  })
+  export  const homeScreenStyles=StyleSheet.create({
+    main:{
+     flex:1,
+     backgroundColor:"blue"
+
+    }
+  })
 
 
   export const mainStyles=StyleSheet.create({
