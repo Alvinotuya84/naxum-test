@@ -3,7 +3,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 
 const API = axios.create({
-  baseURL: "https://9549-41-212-99-21.ngrok.io/api",
+  baseURL: "http://c63f-41-212-99-21.ngrok.io/api",
 });
 API.interceptors.request.use(async (req) => {
   let profile = await SecureStore.getItemAsync("profile");

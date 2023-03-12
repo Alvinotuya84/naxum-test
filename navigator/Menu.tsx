@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Button } from "@rneui/themed";
+import { Button, Overlay } from "@rneui/themed";
 
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { Colors } from "../constants";
@@ -14,6 +14,8 @@ import { logout } from "../redux/AuthSlice";
 const Menu = (props) => {
   const dispatch = useDispatch();
   const { loading, user } = useSelector((state) => state.auth);
+
+  const [signOutOverlay, setSignOutOverlay] = useState<boolean>(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -60,9 +62,53 @@ const Menu = (props) => {
           loading={loading}
           disabled={loading}
           onPress={() => {
-            dispatch(logout());
+            setSignOutOverlay(!signOutOverlay);
           }}
         />
+        <Overlay
+          fullScreen
+          onBackdropPress={() => setSignOutOverlay(!signOutOverlay)}
+          isVisible={signOutOverlay}
+          overlayStyle={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors.mainTheme,
+              margin: 20,
+              fontSize: 20,
+            }}
+          >
+            Proceed to sign-Out?
+          </Text>
+
+          <View
+            style={{
+              flexDirection: "row",
+            }}
+          >
+            <Button
+              loading={loading}
+              disabled={loading}
+              title={"Yes"}
+              containerStyle={{
+                marginHorizontal: 10,
+              }}
+              onPress={() => {
+                dispatch(logout());
+              }}
+            />
+            <Button
+              containerStyle={{
+                marginHorizontal: 10,
+              }}
+              onPress={() => setSignOutOverlay(!signOutOverlay)}
+              title={"No"}
+            />
+          </View>
+        </Overlay>
       </View>
     </View>
   );

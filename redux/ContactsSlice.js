@@ -59,10 +59,20 @@ const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
     contacts:[],
-    loading:false
+    loading:false,
+    addEditContact:false,
+    info:{}
 
   },
   reducers: {
+    toggleAddEditContactOverLay:(state, action)=>{
+      if(state.addEditContact){
+        state.addEditContact=false
+      }else{
+        state.addEditContact=true
+      }
+
+    }
   },
   extraReducers: {
     [addContact.pending]: (state, action) => {
@@ -75,12 +85,15 @@ const contactsSlice = createSlice({
       })
       state.contacts=action.payload.contacts
       state.loading = false;
+      state.info={}
+
 
     },
     [addContact.rejected]: (state, action) => {
 
 
       state.loading = false;
+      state.info=action.payload
 
       if((action.payload.message =="Unauthenticated.")){
         state.user = null;
@@ -109,6 +122,7 @@ const contactsSlice = createSlice({
       state.contacts=action.payload
       state.loading = false;
 
+
     },
     [allContacts.rejected]: (state, action) => {
       Toast.show({
@@ -136,24 +150,23 @@ const contactsSlice = createSlice({
 
     },
     [deleteContact.pending]: (state) => {
+
+
+      state.loading = true;
+    },
+    [deleteContact.fulfilled]: (state, action) => {
+      state.loading = false;
       Toast.show({
         type:"success",
         text1:action.payload.message
       })
       state.contacts=action.payload.contacts
 
-      state.loading = true;
-    },
-    [deleteContact.fulfilled]: (state, action) => {
-      state.loading = false;
-
     },
     [deleteContact.rejected]: (state, action) => {
 
       state.loading = false;
       if((action.payload.message =="Unauthenticated.")){
-        state.user = null;
-        SecureStore.deleteItemAsync("profile");
         Toast.show(
           {
             type:"error"
@@ -169,12 +182,12 @@ const contactsSlice = createSlice({
         })
       }
 
-      state.info=action.payload
 
 
     },
 
   },
 });
+export const { toggleAddEditContactOverLay } = contactsSlice.actions;
 
 export default contactsSlice.reducer;
