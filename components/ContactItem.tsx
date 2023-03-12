@@ -17,9 +17,7 @@ type Props = {
 
 const ContactItem = ({ name, contact, id }: Props) => {
   const [deleteOverlay, setDeleteOverlay] = useState(false);
-  const { loading }: { loading: boolean } = useSelector(
-    (state) => state.contacts
-  );
+
   const dispatch = useDispatch();
   return (
     <View style={contactItemStyles.wrapper}>

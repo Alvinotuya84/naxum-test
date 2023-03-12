@@ -28,7 +28,9 @@ const HomeScreen = (props: Props) => {
   }, []);
 
   const [searchString, setSearchString] = useState("");
-
+  const { loading }: { loading: boolean } = useSelector(
+    (state) => state.contacts
+  );
   return (
     <View style={homeScreenStyles.main}>
       <Text style={homeScreenStyles.header}>Add Contacts</Text>
@@ -43,6 +45,7 @@ const HomeScreen = (props: Props) => {
       />
       <Button
         title={"Search Contact"}
+        disabled={loading}
         onPress={() =>
           dispatch(
             searchContacts({
